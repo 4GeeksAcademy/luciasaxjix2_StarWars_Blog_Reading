@@ -1,83 +1,41 @@
 import React, { useContext } from "react";
-import { Context } from "../store/appContext";
-import rigoImage from "../../img/rigo-baby.jpg";
+import { Context } from "../store/appContext.js";
 import "../../styles/home.css";
-import { Link } from "react-router-dom";
+import CardPeople from "../component/cardpeople.jsx";
+import CardPlanet from "../component/cardplanet.jsx";
+import CardVehicle from "../component/cardvehicle.jsx";
 
 export const Home = () => {
-  const { store, actions } = useContext(Context);
-  return (
-    <>
-      <div className="container mt-5">
-        <h1 className="text-danger">Characters</h1>
-        <div className="my-carousel">
-          {store.characters.map((item) => {
-            return (
-              <div className="my-card" key={item._id}>
-                <img
-                  src={`https://starwars-visualguide.com/assets/img/characters/${item.uid}.jpg`}
-                  alt="..."
-                />
-                <div className="my-body-text">
-                  <h3>{item.properties.name}</h3>
-                  <p>
-                    <strong>Gender: {item.properties.gender}</strong>
-                  </p>
-                  <p>
-                    <strong>Hair color: {item.properties.hair_color}</strong>
-                  </p>
-                  <p>
-                    <strong>Eye-Color: {item.properties.eye_color}</strong>
-                  </p>
-                </div>
-                <div className="my-footer">
-                  <Link
-                    to={`/characters/${item._id}`}
-                    className="btn btn-outline-primary"
-                  >
-                    Learn more!
-                  </Link>
-                  <button className="btn btn-outline-warning">c</button>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
+	const{store} = useContext(Context);
 
-      <div className="container mt-5">
-        <h1 className="text-danger">Planets</h1>
-        <div className="my-carousel">
-          {store.planets.map((item) => {
-            return (
-              <div className="my-card" key={item._id}>
-                <img
-                  src={`https://starwars-visualguide.com/assets/img/planets/${item.uid}.jpg`}
-                  alt="..."
-                />
-                <div className="my-body-text">
-                  <h3>{item.properties.name}</h3>
-                  <p>
-                    <strong>Population: {item.properties.population}</strong>
-                  </p>
-                  <p>
-                    <strong>Terrain: {item.properties.terrain}</strong>
-                  </p>
-                </div>
-                <div className="my-footer">
-                  <Link
-                    to={`/planets/${item._id}`}
-                    className="btn btn-outline-primary"
-                  >
-                    Learn more!
-                  </Link>
-                  <button className="btn btn-outline-warning">c</button>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </>
-  );
-};
+	return(
+		<>
+			<div className="container-fluid mb-5 ms-2">
+				<h1 className="text-danger my-5 ms-2">Characters</h1>
+				<div className="overflow-auto ">
+					<div className="row d-flex flex-row flex-nowrap ms-2">
+						{store.characters.map((item,index) => { return (<CardPeople _id={item._id} uid={item.uid} name={item.properties.name} gender={item.properties.gender} hair_color={item.properties.hair_color} eye_color={item.properties.eye_color} />) })}
+					</div>
+				</div>
+			</div>
+
+			<div className="container-fluid mb-5 ms-2">
+				<h1 className="text-danger my-5 ms-2">Planets</h1>
+				<div className="overflow-auto">
+					<div className="row d-flex flex-row flex-nowrap ms-2">
+					{store.planets.map((item) => { return (<CardPlanet _id={item._id} uid={item.uid} name={item.properties.name} population={item.properties.population} terrain={item.properties.terrain} climate = {item.properties.climate}/>) })}
+					</div>
+				</div>
+			</div>
+
+			<div className="container-fluid mb-5 ms-2">
+				<h1 className="text-danger my-5 ">Vehicles</h1>
+				<div className="overflow-auto ">
+					<div className="row d-flex flex-row flex-nowrap ms-2">
+					{store.vehicles.map((item) => { return (<CardVehicle _id={item._id} uid={item.uid} name={item.properties.name} model={item.properties.model} passenger={item.properties.passengers} consumables={item.properties.consumables}/>) })}
+					</div>
+				</div>
+			</div>
+		</>
+	);
+}
